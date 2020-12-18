@@ -3,12 +3,7 @@ import Sphere from './Sphere';
 
 const Planets = ({data}) => {
   let group = useRef()
-  // const loadTextureImage = bodyName => {
-  //   import(`../assets/2k_${bodyName}.jpg`).then(image => {
-  //     return image;
-  //   })
-  //   .catch(err => console.warn('no texture found'));
-  // };
+
   return (
     <group ref={group}>
       {data.length > 0 && data.map(planet => (
