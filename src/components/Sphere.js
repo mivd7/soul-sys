@@ -17,8 +17,7 @@ const Sphere = (props) => {
     mesh.current.rotation.y = mesh.current.rotation.y += 0.0025
   })
 
-  return (
-    
+  return (  
     <mesh
       ref={mesh}
       scale={[.1, .1, .1]}
@@ -28,9 +27,7 @@ const Sphere = (props) => {
       }}
       onPointerOver={(event) => setHover(true)}
       onPointerOut={(event) => setHover(false)}>
-      <sphereGeometry args={[radius, 32, 32]} />
-      
-        {/* {props.body.id !== 'jupiter' && <meshStandardMaterial color={hovered ? 'red' : 'purple'} />} */}
+      <sphereGeometry args={[radius, 32, 32]} />      
         <meshBasicMaterial map={texture} toneMapped={false} />
     </mesh>
   )
