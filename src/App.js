@@ -5,6 +5,7 @@ import './App.css';
 import Sphere from './components/Sphere'
 import Stars from './components/Stars'
 import Planets from './components/Planets'
+import CameraControls from './components/controls/CameraControls';
 
 
 function App() {
@@ -18,9 +19,6 @@ function App() {
                    setBodies(response.data.bodies)
                  })
                  .catch(err => console.error(err))
-      // const result = await Axios('https://api.le-systeme-solaire.net/rest.php/bodies?order=semimajorAxis%2Casc&filter%5B%5D=isPlanet%2Ceq%2Ctrue')
-      // const filteredBodies = result.data.bodies.filter(body => body.isPlanet === true);
-      
     }
     fetchPlanets();
   }, [])
@@ -32,13 +30,14 @@ function App() {
       })
       setPlanets(filtered);
     }
-    
   }, [bodies])
  
   return (
     <Canvas>
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
+      <CameraControls />
+      <directionalLight intensity={1} />
+      <ambientLight intensity={0.6} />
+      {/* <Planets data={planets}/> */}
       <Stars planets={planets}/>
     </Canvas>
   );

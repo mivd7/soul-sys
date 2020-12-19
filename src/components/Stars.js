@@ -1,12 +1,17 @@
 import React, { useRef, useMemo } from 'react'
-///src/Three
 import * as THREE from 'three';
-import { useFrame } from 'react-three-fiber'
+// import { useFrame } from 'react-three-fiber'
 import Planets from './Planets';
 
 const Stars = ({planets}) => {
   let group = useRef()
-
+  // let theta = 0;
+  // useFrame(() => {
+  //   const r = 2.5 * Math.sin(THREE.Math.degToRad((theta += .1)))
+  //   const s = Math.cos(THREE.Math.degToRad(theta * 4))
+  //   group.current.rotation.set(r, r, r)
+  //   group.current.scale.set(s, s, s)
+  // })
   const [geo, mat, vertices, coords] = useMemo(() => {
     const vertices = [[-1, 0, 0], [0, 1, 0], [1, 0, 0], [0, -1, 0], [-1, 0, 0]];
     const geo = new THREE.SphereBufferGeometry(1, 10, 10)
