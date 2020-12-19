@@ -11,7 +11,6 @@ function Controls() {
   camera.position.set( 0, 0, 999 );
   const ref = useRef()
   useFrame((state, delta) => {
-    console.log('useFrame delta', delta)
     ref.current.update(delta)
   })
   return <flyControls 
