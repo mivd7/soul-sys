@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useFrame, useLoader } from 'react-three-fiber'
 import * as THREE from 'three'
-import {getRandomArbitrary} from '../lib/helpers';
 
 const Sphere = ({position, textureUrl, body, isCenter}) => {
   const mesh = useRef()
   const [active, setActive] = useState(false)
-  const [radius, setRadius] = useState(0);
   const [zCoords, setZCoords] = useState((body.semimajorAxis / 1000000));
   const [scaleFactor, setScaleFactor] = useState([]);
   
@@ -14,11 +12,9 @@ const Sphere = ({position, textureUrl, body, isCenter}) => {
 
   useEffect(() => {
     if(isCenter) {
-      setRadius(body.meanRadius)
       setZCoords(0)
       setScaleFactor([.0005, .0005, .0005])
     } else {
-      setRadius(body.meanRadius)
       setZCoords(body.semimajorAxis / 50000)
       setScaleFactor([.01, .01, .01])
     }
@@ -37,7 +33,7 @@ const Sphere = ({position, textureUrl, body, isCenter}) => {
         setActive(!active)
       }}
       position={[0, 0, zCoords * -1]}>
-      {radius && radius !== 0 && <sphereGeometry attach="geometry" args={[radius, 32, 32]}/>}      
+      <sphereGeometry attach="geometry" args={[body.meanRadius, 50, 50]}/>     
       <meshBasicMaterial attach="material" map={texture} toneMapped={false} opacity={1}/>
     </mesh>
   )
