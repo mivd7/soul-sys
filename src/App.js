@@ -5,6 +5,7 @@ import './App.css';
 // import Stars from './components/Stars'
 import CameraControls from './components/controls/CameraControls';
 import SolarSystem from './components/SolarSystem';
+import { BASE_URL } from './constants';
 
 function App() {
   const [bodies, setBodies] = useState([])
@@ -12,7 +13,7 @@ function App() {
 
   useEffect(() => {
     async function fetchPlanets() {
-      await Axios.get('https://api.le-systeme-solaire.net/rest.php/bodies?order=semimajorAxis%2Cdesc')
+      await Axios.get(`${BASE_URL}?order=semimajorAxis%2Cdesc`)
                  .then(response => {
                    setBodies(response.data.bodies)
                  })

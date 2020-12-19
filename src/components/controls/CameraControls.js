@@ -9,16 +9,10 @@ const CameraControls = () => {
     camera,
     gl: { domElement },
   } = useThree();
+  camera.position.set( 0, 0, 0 );
 
   const controls = useRef();
-
-  // camera.position.z = 999;
-  camera.position.set( 0, 0, 9 );
   useFrame(() => controls.current.update());
-  // domElement.addEventListener( 'mousewheel', (event) => {
-  //   console.log('mousewheel event')
-  //   camera.position.z +=event.deltaY/500;
-  // });
 
   return (
     <orbitControls
