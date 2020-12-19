@@ -1,15 +1,17 @@
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useThree } from "react-three-fiber";
 import { CubeTextureLoader } from "three";
 import Sphere from "./Sphere";
+import { BASE_URL } from '../constants';
+import Axios from "axios";
 
-// Loads the skybox texture and applies it to the scene.
 const SolarSystem = ({data}) => {
+  const [sun, setSun] = useState(null)
   const { scene } = useThree();
-  let group = useRef()
-  const coords = new Array(data.length).fill().map(i => [Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4])
+  let group = useRef();
+
+  const coords = new Array(data.length).fill().map(i => [Math.random() * 80 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4])
   const loader = new CubeTextureLoader();
-  // The CubeTextureLoader load method takes an array of urls representing all 6 sides of the cube.
   const texture = loader.load([
     "assets/backgrounds/front.jpeg",
     "assets/backgrounds/back.jpeg",
@@ -19,6 +21,14 @@ const SolarSystem = ({data}) => {
     "assets/backgrounds/right.jpeg",
   ]);
 
+  useEffect(() => {
+    async function getSun() {
+      await Axios.get(`${BASE_URL}/soleil`)
+                 .then(response => setSun(response.data))
+                 .catch(err => console.error(err))
+    }
+    getSun();
+  }, [])
   // Set the scene background property to the resulting texture.
   scene.background = texture;
   return (
@@ -31,6 +41,15 @@ const SolarSystem = ({data}) => {
           body={data[i]} />
       </Suspense>
     ))}
+    {sun && 
+      <Suspense fallback="loading">
+        <Sphere 
+          textureUrl={`assets/textures/2k_${sun.englishName.toLowerCase()}.jpg`}
+          position={[0,0,0]} 
+          body={sun} 
+          isCenter={true}/>
+      </Suspense>
+    }
   </group>
   );
 };
