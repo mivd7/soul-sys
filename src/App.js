@@ -2,8 +2,9 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import './App.css';
-import Stars from './components/Stars'
+// import Stars from './components/Stars'
 import CameraControls from './components/controls/CameraControls';
+import SolarSystem from './components/SolarSystem';
 
 function App() {
   const [bodies, setBodies] = useState([])
@@ -32,7 +33,8 @@ function App() {
       <CameraControls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />
-      <Stars planets={planets}/>
+      <SolarSystem data={planets}/>
+      {/* <Stars planets={planets}/> */}
     </Canvas>
   );
 }

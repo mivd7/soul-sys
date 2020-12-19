@@ -13,7 +13,7 @@ const CameraControls = () => {
   const controls = useRef();
 
   // camera.position.z = 999;
-  camera.position.set( 0, 0, 99 );
+  camera.position.set( 0, 9, 9 );
   useFrame(() => controls.current.update());
 
   return (
