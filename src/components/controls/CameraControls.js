@@ -12,8 +12,8 @@ const CameraControls = () => {
 
   const controls = useRef();
 
-  camera.position.z = 999;
-
+  // camera.position.z = 999;
+  camera.position.set( 0, 0, 99 );
   useFrame(() => controls.current.update());
 
   return (
@@ -21,7 +21,7 @@ const CameraControls = () => {
       ref={controls}
       args={[camera, domElement]}
       autoRotate={false}
-      enableZoom={false}
+      enableZoom={true}
     />
   );
 };

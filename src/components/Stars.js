@@ -19,6 +19,7 @@ const Stars = ({planets}) => {
     const coords = new Array(2000).fill().map(i => [Math.random() * 800 - 400, Math.random() * 800 - 400, Math.random() * 800 - 400])
     return [geo, mat, vertices, coords]
   }, [])
+  
   return (
     <group ref={group}>
       {coords.map(([p1, p2, p3], i) => (
