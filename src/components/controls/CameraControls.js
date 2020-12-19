@@ -9,11 +9,13 @@ const CameraControls = () => {
     camera,
     gl: { domElement },
   } = useThree();
-  camera.position.set( 0, 0, 0 );
 
   const controls = useRef();
-  useFrame(() => controls.current.update());
 
+  // camera.position.z = 999;
+  camera.position.set( 0, 0, 9 );
+  useFrame(() => controls.current.update());
+  
   return (
     <orbitControls
       ref={controls}

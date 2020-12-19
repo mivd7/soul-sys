@@ -9,7 +9,7 @@ const Sphere = ({position, textureUrl, body, isCenter}) => {
   const mesh = useRef()
   const [active, setActive] = useState(false)
   const [radius, setRadius] = useState(0);
-  const [zCoords, setZCoords] = useState(body.semimajorAxis);
+  const [zCoords, setZCoords] = useState((body.semimajorAxis / 1000000));
   
   const texture = useLoader(THREE.TextureLoader, textureUrl);
   useEffect(() => {
@@ -39,7 +39,7 @@ const Sphere = ({position, textureUrl, body, isCenter}) => {
         console.log(body);
         setActive(!active)
       }}
-      position={[0, 0, zCoords]}>
+      position={[x, 0, (body.semimajorAxis / 1000000) * -1]}>
       {radius && radius !== 0 && <sphereGeometry attach="geometry" args={[radius, 32, 32]}/>}      
       <meshBasicMaterial attach="material" map={texture} toneMapped={false} opacity={1}/>
     </mesh>
