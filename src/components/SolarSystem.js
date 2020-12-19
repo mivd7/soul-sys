@@ -9,8 +9,6 @@ const SolarSystem = ({data}) => {
   const [sun, setSun] = useState(null)
   const { scene } = useThree();
   let group = useRef();
-
-  const coords = new Array(data.length).fill().map(i => [Math.random() * 80 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4])
   const loader = new CubeTextureLoader();
   const texture = loader.load([
     "assets/backgrounds/front.jpeg",
@@ -33,12 +31,14 @@ const SolarSystem = ({data}) => {
   scene.background = texture;
   return (
     <group ref={group}>
-    {coords.length > 0 && coords.map((c, i) => (
-      <Suspense key={data[i].id} fallback="loading">
+    {data.length > 0 && data.map((planet, i) => (
+      <Suspense key={planet.id} fallback="loading">
         <Sphere 
-          textureUrl={`assets/textures/2k_${data[i].englishName.toLowerCase()}.jpg`}
-          position={c} 
-          body={data[i]} />
+          textureUrl={`assets/textures/2k_${planet.englishName.toLowerCase()}.jpg`}
+          position={[0, 0, (planet.semimajorAxis / 50000) * -1]} 
+          scale={[.01, .01, .01]}
+          geometry={[planet.meanRadius, 50, 50]}
+          body={planet} />
       </Suspense>
     ))}
     {sun && 
@@ -46,6 +46,8 @@ const SolarSystem = ({data}) => {
         <Sphere 
           textureUrl={`assets/textures/2k_${sun.englishName.toLowerCase()}.jpg`}
           position={[0,0,0]} 
+          scale={[.0005, .0005, .0005]}
+          geometry={[sun.meanRadius, 50, 50]}
           body={sun} 
           isCenter={true}/>
       </Suspense>
