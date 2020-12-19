@@ -18,10 +18,11 @@ const Sphere = ({position, textureUrl, body, isCenter}) => {
     // const computedRadius = computeProjectedRadius(3, distance, scaledRadius)
     // console.log('calculated distance ' + body.englishName, distance);
     if(isCenter) {
-      setRadius(body.meanRadius / 20000)
+      setRadius(body.meanRadius / 1000)
       setZCoords(0)
     } else {
-      setRadius(computeProjectedRadius(3, distance, scaledRadius))
+      setRadius(body.meanRadius / 10)
+      setZCoords(body.semimajorAxis / 10000)
     }
     
     
@@ -39,7 +40,7 @@ const Sphere = ({position, textureUrl, body, isCenter}) => {
         console.log(body);
         setActive(!active)
       }}
-      position={[x, 0, (body.semimajorAxis / 1000000) * -1]}>
+      position={[0, 0, zCoords]}>
       {radius && radius !== 0 && <sphereGeometry attach="geometry" args={[radius, 32, 32]}/>}      
       <meshBasicMaterial attach="material" map={texture} toneMapped={false} opacity={1}/>
     </mesh>

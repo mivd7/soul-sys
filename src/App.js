@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import './App.css';
 // import Stars from './components/Stars'
-import CameraControls from './components/controls/CameraControls';
+import Controls from './components/controls/CameraControls';
 import SolarSystem from './components/SolarSystem';
 import { BASE_URL } from './constants';
 
@@ -30,8 +30,8 @@ function App() {
   }, [bodies])
  
   return (
-    <Canvas>
-      <CameraControls />
+    <Canvas camera={{ position: [0, 0, 10], fov: 40 }}>
+      <Controls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />
       <SolarSystem data={planets}/>
