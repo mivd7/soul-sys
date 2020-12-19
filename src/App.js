@@ -2,11 +2,9 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import './App.css';
-import Sphere from './components/Sphere'
-import Stars from './components/Stars'
-import Planets from './components/Planets'
+// import Stars from './components/Stars'
 import CameraControls from './components/controls/CameraControls';
-
+import SolarSystem from './components/SolarSystem';
 
 function App() {
   const [bodies, setBodies] = useState([])
@@ -14,7 +12,7 @@ function App() {
 
   useEffect(() => {
     async function fetchPlanets() {
-      await Axios.get('https://api.le-systeme-solaire.net/rest.php/bodies?order=semimajorAxis%2Casc&filter%5B%5D=isPlanet%2Ceq%false')
+      await Axios.get('https://api.le-systeme-solaire.net/rest.php/bodies?order=semimajorAxis%2Cdesc')
                  .then(response => {
                    setBodies(response.data.bodies)
                  })
@@ -25,9 +23,7 @@ function App() {
 
   useEffect(() => {
     if(bodies.length > 0) {
-      const filtered = bodies.filter(body => {
-        return body.isPlanet === true
-      })
+      const filtered = bodies.filter(body => body.isPlanet)
       setPlanets(filtered);
     }
   }, [bodies])
@@ -37,8 +33,8 @@ function App() {
       <CameraControls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />
-      {/* <Planets data={planets}/> */}
-      <Stars planets={planets}/>
+      <SolarSystem data={planets}/>
+      {/* <Stars planets={planets}/> */}
     </Canvas>
   );
 }

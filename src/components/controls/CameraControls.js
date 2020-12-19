@@ -13,8 +13,12 @@ const CameraControls = () => {
   const controls = useRef();
 
   // camera.position.z = 999;
-  camera.position.set( 0, 0, 99 );
+  camera.position.set( 0, 0, 9 );
   useFrame(() => controls.current.update());
+  // domElement.addEventListener( 'mousewheel', (event) => {
+  //   console.log('mousewheel event')
+  //   camera.position.z +=event.deltaY/500;
+  // });
 
   return (
     <orbitControls
@@ -22,6 +26,10 @@ const CameraControls = () => {
       args={[camera, domElement]}
       autoRotate={false}
       enableZoom={true}
+      maxAzimuthAngle={Math.PI / 4}
+      maxPolarAngle={Math.PI}
+      minAzimuthAngle={-Math.PI / 4}
+      minPolarAngle={0}
     />
   );
 };

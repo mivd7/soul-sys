@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useFrame, useLoader } from 'react-three-fiber'
 import * as THREE from 'three'
-
+const x = getRandomArbitrary(-100, 100);
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
 const Sphere = ({position, textureUrl, body}) => {
   const mesh = useRef()
   // const [hovered, setHover] = useState(false)
   const [active, setActive] = useState(false)
   const [radius, setRadius] = useState(0);
   const texture = useLoader(THREE.TextureLoader, textureUrl);
+  //random position on x vector
 
   useEffect(() => {
-    setRadius(body.meanRadius / 1000)
+    setRadius(body.meanRadius / 500)
   }, [body])
 
   useFrame(() => {
-    
     mesh.current.rotation.y = mesh.current.rotation.y += .0025;
   })
 
@@ -25,9 +28,10 @@ const Sphere = ({position, textureUrl, body}) => {
       onClick={(event) => {
         console.log(body);
         setActive(!active)
-      }}>
-      {radius && radius !== 0 && <sphereGeometry args={[radius, 30, 30]} />}      
-      <meshBasicMaterial map={texture} toneMapped={false} opacity={1}/>
+      }}
+      position={[x, 0, (body.semimajorAxis / 1000000) * -1]}>
+      {radius && radius !== 0 && <sphereGeometry attach="geometry" args={[radius, 16, 16]}/>}      
+      <meshBasicMaterial attach="material" map={texture} toneMapped={false} opacity={1}/>
     </mesh>
   )
 }
