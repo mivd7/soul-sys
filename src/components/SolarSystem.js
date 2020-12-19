@@ -6,9 +6,21 @@ import { BASE_URL } from '../constants';
 import Axios from "axios";
 
 const SolarSystem = ({data}) => {
-  const [sun, setSun] = useState(null)
+  const [centralPoint, setCentralPoint] = useState(null)
   const { scene } = useThree();
   let group = useRef();
+
+  useEffect(() => {
+    if(!centralPoint) {
+      async function getSun() {
+        await Axios.get(`${BASE_URL}/soleil`)
+                   .then(response => setCentralPoint(response.data))
+                   .catch(err => console.error(err))
+      }
+      getSun();
+    }
+  }, [centralPoint]);
+
   const loader = new CubeTextureLoader();
   const texture = loader.load([
     "assets/backgrounds/front.jpeg",
@@ -18,37 +30,28 @@ const SolarSystem = ({data}) => {
     "assets/backgrounds/left.jpeg",
     "assets/backgrounds/right.jpeg",
   ]);
-
-  useEffect(() => {
-    async function getSun() {
-      await Axios.get(`${BASE_URL}/soleil`)
-                 .then(response => setSun(response.data))
-                 .catch(err => console.error(err))
-    }
-    getSun();
-  }, [])
-  // Set the scene background property to the resulting texture.
   scene.background = texture;
+
   return (
     <group ref={group}>
-    {data.length > 0 && data.map((planet, i) => (
-      <Suspense key={planet.id} fallback="loading">
+    {data.length > 0 && data.map((body, i) => (
+      <Suspense key={body.id} fallback="loading">
         <Sphere 
-          textureUrl={`assets/textures/2k_${planet.englishName.toLowerCase()}.jpg`}
-          position={[0, 0, (planet.semimajorAxis / 50000) * -1]} 
+          textureUrl={`assets/textures/2k_${body.englishName.toLowerCase()}.jpg`}
+          position={[0, 0, (body.semimajorAxis / 50000) * -1]} 
           scale={[.01, .01, .01]}
-          geometry={[planet.meanRadius, 50, 50]}
-          body={planet} />
+          geometry={[body.meanRadius, 50, 50]}
+          body={body} />
       </Suspense>
     ))}
-    {sun && 
+    {centralPoint && 
       <Suspense fallback="loading">
         <Sphere 
-          textureUrl={`assets/textures/2k_${sun.englishName.toLowerCase()}.jpg`}
+          textureUrl={`assets/textures/2k_${centralPoint.englishName.toLowerCase()}.jpg`}
           position={[0,0,0]} 
           scale={[.0005, .0005, .0005]}
-          geometry={[sun.meanRadius, 50, 50]}
-          body={sun} 
+          geometry={[centralPoint.meanRadius, 50, 50]}
+          body={centralPoint} 
           isCenter={true}/>
       </Suspense>
     }

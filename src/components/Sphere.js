@@ -4,7 +4,6 @@ import * as THREE from 'three'
 
 const Sphere = ({position, textureUrl, body, scale, geometry}) => {
   const mesh = useRef()
-  const [active, setActive] = useState(false)
   const texture = useLoader(THREE.TextureLoader, textureUrl);
 
   useFrame(() => {
@@ -17,7 +16,6 @@ const Sphere = ({position, textureUrl, body, scale, geometry}) => {
       scale={scale}
       onClick={(event) => {
         console.log(body);
-        setActive(!active)
       }}
       position={position}>
       <sphereGeometry attach="geometry" args={geometry}/>     

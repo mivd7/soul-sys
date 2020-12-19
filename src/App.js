@@ -2,7 +2,6 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import './App.css';
-// import Stars from './components/Stars'
 import Controls from './components/controls/CameraControls';
 import SolarSystem from './components/SolarSystem';
 import { BASE_URL } from './constants';
@@ -35,7 +34,6 @@ function App() {
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />
       <SolarSystem data={planets}/>
-      {/* <Stars planets={planets}/> */}
     </Canvas>
   );
 }
