@@ -16,7 +16,7 @@ function Controls() {
   return <flyControls 
             ref={ref} 
             args={[camera, domElement]} 
-            movementSpeed={1000} 
+            movementSpeed={10000} 
             domElement={domElement}
             rollSpeed={Math.PI / 24}
             autoForward={false}

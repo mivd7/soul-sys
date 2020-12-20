@@ -9,6 +9,8 @@ import { BASE_URL } from './constants';
 function App() {
   const [bodies, setBodies] = useState([])
   const [planets, setPlanets] = useState([])
+  const [farPoint, setFarPoint] = useState(0);
+  const [highPoint, setHighPoint] = useState(0);
 
   useEffect(() => {
     async function fetchPlanets() {
@@ -23,13 +25,16 @@ function App() {
 
   useEffect(() => {
     if(bodies.length > 0) {
-      const filtered = bodies.filter(body => body.isPlanet)
+      const filtered = bodies.filter(body => body.isPlanet);
       setPlanets(filtered);
+      setFarPoint(bodies[bodies.length - 1].semimajorAxis);
     }
   }, [bodies])
- 
+ //far: sets farthest visible point in camera image from current position? JA!
+ //fov: sets height of camera image? vertical field of view
+//method setViewOffset: https://threejs.org/docs/#api/en/cameras/PerspectiveCamera.setViewOffset
   return (
-    <Canvas camera={{ position: [0, 0, 10], fov: 40 }}>
+    <Canvas camera={{ position: [0, 0, 10], fov: 8000, far: farPoint }}>
       <Controls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />

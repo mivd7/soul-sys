@@ -38,8 +38,8 @@ const SolarSystem = ({data}) => {
       <Suspense key={body.id} fallback="loading">
         <Sphere 
           textureUrl={`assets/textures/2k_${body.englishName.toLowerCase()}.jpg`}
-          position={[0, 0, (body.semimajorAxis / 50000) * -1]} 
-          scale={[.01, .01, .01]}
+          position={[0, 0, (body.semimajorAxis / 1000) * -1]} 
+          scale={[1, 1, 1]}
           geometry={[body.meanRadius, 50, 50]}
           body={body} />
       </Suspense>
@@ -49,7 +49,7 @@ const SolarSystem = ({data}) => {
         <Sphere 
           textureUrl={`assets/textures/2k_${centralPoint.englishName.toLowerCase()}.jpg`}
           position={[0,0,0]} 
-          scale={[.0005, .0005, .0005]}
+          scale={[.1, .1, .1]}
           geometry={[centralPoint.meanRadius, 50, 50]}
           body={centralPoint} 
           isCenter={true}/>
