@@ -30,9 +30,7 @@ function App() {
       setFarPoint(bodies[bodies.length - 1].semimajorAxis);
     }
   }, [bodies])
- //far: sets farthest visible point in camera image from current position? JA!
- //fov: sets height of camera image? vertical field of view
-//method setViewOffset: https://threejs.org/docs/#api/en/cameras/PerspectiveCamera.setViewOffset
+
   return (
     <Canvas camera={{ position: [0, 0, 10], fov: 8000, far: farPoint }}>
       <Controls />

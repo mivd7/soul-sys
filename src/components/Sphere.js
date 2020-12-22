@@ -1,11 +1,17 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useFrame, useLoader } from 'react-three-fiber'
 import * as THREE from 'three'
 
 const Sphere = ({position, textureUrl, body, scale, geometry}) => {
   const mesh = useRef()
   const texture = useLoader(THREE.TextureLoader, textureUrl);
-
+  
+  useEffect(() => {
+    const axis = new THREE.Vector3(0,0,0)
+    mesh.current.rotateOnAxis(axis, body.axialTilt);
+    mesh.current.color = '#000000';
+  }, [mesh, body.tilt]);
+  
   useFrame(() => {
     mesh.current.rotation.y = mesh.current.rotation.y += .0025;
   })
@@ -18,7 +24,7 @@ const Sphere = ({position, textureUrl, body, scale, geometry}) => {
         console.log(body);
       }}
       position={position}>
-      <sphereGeometry attach="geometry" args={geometry}/>     
+      <sphereGeometry attach="geometry" args={geometry}/>    
       <meshBasicMaterial attach="material" map={texture} toneMapped={false}/>
     </mesh>
   )
