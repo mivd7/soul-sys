@@ -1,9 +1,10 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useThree } from "react-three-fiber";
 import { CubeTextureLoader } from "three";
-import Sphere from "./Sphere";
-import { BASE_URL } from '../constants';
+import Sphere from "../reusables/Sphere";
+import { BASE_URL } from '../../constants';
 import Axios from "axios";
+import PlanetarySystem from "./PlanetarySystem";
 
 const SolarSystem = ({data}) => {
   const [centralPoint, setCentralPoint] = useState(null)
@@ -35,14 +36,7 @@ const SolarSystem = ({data}) => {
   return (
     <group ref={group}>
     {data.length > 0 && data.map((body, i) => (
-      <Suspense key={body.id} fallback="loading">
-        <Sphere 
-          textureUrl={`assets/textures/2k_${body.englishName.toLowerCase()}.jpg`}
-          position={[0, 0, (body.semimajorAxis / 1000) * -1]} 
-          scale={[1, 1, 1]}
-          geometry={[body.meanRadius, 50, 50]}
-          body={body} />
-      </Suspense>
+      <PlanetarySystem body={body}/>
     ))}
     {centralPoint && 
       <Suspense fallback="loading">

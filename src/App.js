@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import './App.css';
 import Controls from './components/controls/CameraControls';
-import SolarSystem from './components/SolarSystem';
+import SolarSystem from './components/celestial/SolarSystem';
 import { BASE_URL } from './constants';
 
 function App() {

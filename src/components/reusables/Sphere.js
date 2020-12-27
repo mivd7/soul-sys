@@ -10,7 +10,7 @@ const Sphere = ({position, textureUrl, body, scale, geometry}) => {
     const axis = new THREE.Vector3(0,0,0)
     mesh.current.rotateOnAxis(axis, body.axialTilt);
     mesh.current.color = '#000000';
-  }, [mesh, body.tilt]);
+  }, [mesh]);
   
   useFrame(() => {
     mesh.current.rotation.y = mesh.current.rotation.y += .0025;
