@@ -23,3 +23,44 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
     segoe ui, arial, sans-serif;
 }
+
+.content {
+  padding-top: 10px;
+  transform: translate3d(200%, 0, 0);
+  text-align: right;
+}
+
+.content::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 190px;
+  transform: translate3d(-120px, 0, 0);
+  height: 1px;
+  background: white;
+}
+
+.loading {
+  padding: 10px;
+  font-weight: 900;
+  font-size: 3em;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+
+#info {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+  z-index: 1; /* TODO Solve this in HTML */
+  color: white;
+}

@@ -1,10 +1,14 @@
 import Axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
+import { Html } from "drei"
+
 import './App.css';
 import Controls from './components/controls/CameraControls';
 import SolarSystem from './components/celestial/SolarSystem';
+import Fallback from './components/reusables/Fallback';
 import { BASE_URL } from './constants';
+
 
 function App() {
   const [bodies, setBodies] = useState([])
@@ -31,13 +35,19 @@ function App() {
     }
   }, [bodies])
 
-  return (
+  return (<>
+    <div id="info">3d Solar Sys - earth [fly controls]<br/>
+      <b>WASD</b> move, <b>R|F</b> up | down, <b>Q|E</b> roll, <b>up|down</b> pitch, <b>left|right</b> yaw
+    </div> 
     <Canvas camera={{ position: [0, 0, 10], fov: 8000, far: farPoint }}>
       <Controls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />
-      <SolarSystem data={planets}/>
+      <Suspense fallback={<Fallback/>}>
+        <SolarSystem data={planets}/>
+      </Suspense>
     </Canvas>
+    </>
   );
 }
 

@@ -8,7 +8,7 @@ function Controls() {
     camera,
     gl: { domElement },
   } = useThree();  
-  camera.position.set( 0, 0, 999 );
+
   const ref = useRef()
   useFrame((state, delta) => {
     ref.current.update(delta)
@@ -20,7 +20,10 @@ function Controls() {
             domElement={domElement}
             rollSpeed={Math.PI / 24}
             autoForward={false}
-            dragToLook={true} />
+            dragToLook={true} 
+            change={(event) => {
+              console.log('fly controls change', event)
+            }}/>
 }
 
 export default Controls;
