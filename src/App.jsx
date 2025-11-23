@@ -1,42 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import './App.css';
 import Controls from './components/controls/CameraControls';
 import SolarSystem from './components/SolarSystem';
-import { BASE_URL } from './constants';
-import axios from './fetcher';
+import { useQuery } from '@apollo/client/react';
+import { GET_PLANETS } from './queries/getPlanets';
 
 function App() {
-  const [bodies, setBodies] = useState([])
-  const [planets, setPlanets] = useState([])
-  const [farPoint, setFarPoint] = useState(0);
-  const [highPoint, setHighPoint] = useState(0);
-
-  useEffect(() => {
-    async function fetchPlanets() {
-      await axios.get(`${BASE_URL}?order=semimajorAxis%2Cdesc`)
-                 .then(response => {
-                   setBodies(response.data.bodies)
-                 })
-                 .catch(err => console.error(err))
-    }
-    fetchPlanets();
-  }, [])
-
-  useEffect(() => {
-    if(bodies.length > 0) {
-      const filtered = bodies.filter(body => body.isPlanet);
-      setPlanets(filtered);
-      setFarPoint(bodies[bodies.length - 1].semimajorAxis);
-    }
-  }, [bodies])
+  const { loading, error, data } = useQuery(GET_PLANETS);
+  if(error) {
+    return <p>{JSON.stringify(error)}</p>
+  }
+  const farPoint = useMemo(() => data?.allPlanets[0].semimajorAxis ?? 0, [data]);
+  console.log('data', data)
+  // useEffect(() => {
+  //   async function fetchPlanets() {
+  //     await axios.get(`${BASE_URL}?order=semimajorAxis%2Cdesc`)
+  //                .then(response => {
+  //                  setBodies(response.data.bodies)
+  //                })
+  //                .catch(err => console.error(err))
+  //   }
+  //   fetchPlanets();
+  // }, [])
+  // useEffect(() => {
+  //   if(bodies.length > 0) {
+  //     const filtered = bodies.filter(body => body.isPlanet);
+  //     setPlanets(filtered);
+  //     setFarPoint(bodies[bodies.length - 1].semimajorAxis);
+  //   }
+  // }, [bodies])
 
   return (
-    <Canvas style={{}} camera={{ position: [0, 0, 10], fov: 8000, far: farPoint }}>
+    <Canvas style={{}} camera={{ position: [0, 0, 1], fov: 8000, far: farPoint }}>
       <Controls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />
-      <SolarSystem data={planets}/>
+      {data?.allPlanets && <SolarSystem data={data.allPlanets ?? []}/>}
     </Canvas>
   );
 }
