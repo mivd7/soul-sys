@@ -2,7 +2,6 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { CubeTextureLoader } from "three";
 import Sphere from "./Sphere";
-import { BASE_URL } from '../constants';
 import Axios from "axios";
 
 const SolarSystem = ({data}) => {
@@ -10,16 +9,16 @@ const SolarSystem = ({data}) => {
   const { scene } = useThree();
   let group = useRef();
 
-  useEffect(() => {
-    if(!centralPoint) {
-      async function getSun() {
-        await Axios.get(`${BASE_URL}/soleil`)
-                   .then(response => setCentralPoint(response.data))
-                   .catch(err => console.error(err))
-      }
-      getSun();
-    }
-  }, [centralPoint]);
+  // useEffect(() => {
+  //   if(!centralPoint) {
+  //     async function getSun() {
+  //       await Axios.get(`${BASE_URL}/soleil`)
+  //                  .then(response => setCentralPoint(response.data))
+  //                  .catch(err => console.error(err))
+  //     }
+  //     getSun();
+  //   }
+  // }, [centralPoint]);
 
   const loader = new CubeTextureLoader();
   const texture = loader.load([
