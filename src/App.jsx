@@ -9,27 +9,11 @@ import { GET_PLANETS } from './queries/getPlanets';
 function App() {
   const { loading, error, data } = useQuery(GET_PLANETS);
   if(error) {
-    return <p>{JSON.stringify(error)}</p>
+    return <p style={{color: 'red'}}>{JSON.stringify(error)}</p>
   }
-  const farPoint = useMemo(() => data?.allPlanets[0].semimajorAxis ?? 0, [data]);
+
+  const farPoint = useMemo(() => data?.allPlanets.at(data?.allPlanets ?? 0).semimajorAxis ?? 0, [data]);
   console.log('data', data)
-  // useEffect(() => {
-  //   async function fetchPlanets() {
-  //     await axios.get(`${BASE_URL}?order=semimajorAxis%2Cdesc`)
-  //                .then(response => {
-  //                  setBodies(response.data.bodies)
-  //                })
-  //                .catch(err => console.error(err))
-  //   }
-  //   fetchPlanets();
-  // }, [])
-  // useEffect(() => {
-  //   if(bodies.length > 0) {
-  //     const filtered = bodies.filter(body => body.isPlanet);
-  //     setPlanets(filtered);
-  //     setFarPoint(bodies[bodies.length - 1].semimajorAxis);
-  //   }
-  // }, [bodies])
 
   return (
     <Canvas style={{}} camera={{ position: [0, 0, 1], fov: 8000, far: farPoint }}>
