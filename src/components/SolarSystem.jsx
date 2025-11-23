@@ -1,25 +1,22 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { CubeTextureLoader } from "three";
 import Sphere from "./Sphere";
 import Axios from "axios";
+import { GET_BODY } from "../queries/getBody";
+import { useQuery } from "@apollo/client/react";
 
 const SolarSystem = ({data}) => {
-  const [centralPoint, setCentralPoint] = useState(null)
   const { scene } = useThree();
   let group = useRef();
+  const { data: sunData } = useQuery(GET_BODY, {
+    variables: {
+      id: 'soleil'
+    },
+    pollInterval: 0
+  })
 
-  // useEffect(() => {
-  //   if(!centralPoint) {
-  //     async function getSun() {
-  //       await Axios.get(`${BASE_URL}/soleil`)
-  //                  .then(response => setCentralPoint(response.data))
-  //                  .catch(err => console.error(err))
-  //     }
-  //     getSun();
-  //   }
-  // }, [centralPoint]);
-
+  const sun = useMemo(() => sunData?.body, [sunData])
   const loader = new CubeTextureLoader();
   const texture = loader.load([
     "assets/backgrounds/front.jpeg",
@@ -37,20 +34,20 @@ const SolarSystem = ({data}) => {
       <Suspense key={body.id} fallback="loading">
         <Sphere 
           textureUrl={`assets/textures/2k_${body.englishName.toLowerCase()}.jpg`}
-          position={[0, 0, (body.semimajorAxis / 1000) * -1]} 
+          position={[0, 0, body.semimajorAxis / 100]} 
           scale={[1, 1, 1]}
-          geometry={[body.meanRadius, 50, 50]}
+          geometry={[body.equaRadius, 50, 50]}
           body={body} />
       </Suspense>
     ))}
-    {centralPoint && 
+    {sun && 
       <Suspense fallback="loading">
         <Sphere 
-          textureUrl={`assets/textures/2k_${centralPoint.englishName.toLowerCase()}.jpg`}
+          textureUrl={`assets/textures/2k_${sun.englishName.toLowerCase()}.jpg`}
           position={[0,0,0]} 
           scale={[.1, .1, .1]}
-          geometry={[centralPoint.meanRadius, 50, 50]}
-          body={centralPoint} 
+          geometry={[sun.equaRadius, 50, 50]}
+          body={sun} 
           isCenter={true}/>
       </Suspense>
     }

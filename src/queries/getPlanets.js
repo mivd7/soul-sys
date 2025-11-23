@@ -8,6 +8,8 @@ export const GET_PLANETS = gql`
       axialTilt
       semimajorAxis
       meanRadius
+      polarRadius
+      equaRadius
     }
   }
 `;
