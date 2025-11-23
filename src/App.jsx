@@ -1,10 +1,10 @@
-import Axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Canvas } from 'react-three-fiber';
+import { Canvas } from '@react-three/fiber';
 import './App.css';
 import Controls from './components/controls/CameraControls';
 import SolarSystem from './components/SolarSystem';
 import { BASE_URL } from './constants';
+import axios from './fetcher';
 
 function App() {
   const [bodies, setBodies] = useState([])
@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     async function fetchPlanets() {
-      await Axios.get(`${BASE_URL}?order=semimajorAxis%2Cdesc`)
+      await axios.get(`${BASE_URL}?order=semimajorAxis%2Cdesc`)
                  .then(response => {
                    setBodies(response.data.bodies)
                  })
@@ -32,7 +32,7 @@ function App() {
   }, [bodies])
 
   return (
-    <Canvas camera={{ position: [0, 0, 10], fov: 8000, far: farPoint }}>
+    <Canvas style={{}} camera={{ position: [0, 0, 10], fov: 8000, far: farPoint }}>
       <Controls />
       <directionalLight intensity={1} />
       <ambientLight intensity={0.6} />

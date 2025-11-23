@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useRef, useState } from "react";
-import { useThree } from "react-three-fiber";
+import { useThree } from "@react-three/fiber";
 import { CubeTextureLoader } from "three";
 import Sphere from "./Sphere";
 import { BASE_URL } from '../constants';

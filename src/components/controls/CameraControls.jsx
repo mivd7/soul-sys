@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { extend, useThree, useFrame } from "react-three-fiber";
+import { extend, useThree, useFrame } from "@react-three/fiber";
 import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
 
 extend({ FlyControls });
