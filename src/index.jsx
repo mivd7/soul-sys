@@ -4,8 +4,7 @@ import './index.css';
 import App from './App';
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
-
-const env = import.meta.env;
+import { env } from './constants';
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: env.VITE_API_URL || "http://localhost:4000" }),
