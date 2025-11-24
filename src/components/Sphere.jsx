@@ -16,7 +16,7 @@ const Sphere = ({position, textureUrl, body, scale, geometry}) => {
     mesh.current.rotation.y = mesh.current.rotation.y += .0025;
   })
 
-  return (  
+  return (
     <mesh
       ref={mesh}
       scale={scale}
@@ -24,8 +24,8 @@ const Sphere = ({position, textureUrl, body, scale, geometry}) => {
         console.log(body);
       }}
       position={position}>
-      <sphereGeometry attach="geometry" args={geometry}/>    
-      <meshBasicMaterial attach="material" map={texture} toneMapped={false}/>
+      <sphereGeometry attach="geometry" args={geometry}/>
+      <meshStandardMaterial attach="material" map={texture} />
     </mesh>
   )
 }
