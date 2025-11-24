@@ -38,7 +38,7 @@ const SolarSystem = ({data}) => {
     <group ref={group}>
     {data.length > 0 && sun && data.map((body, i) => {
       const angle = (i * Math.PI * 2) / data.length; // Distribute planets in a circle
-      const distance = (sun.equaRadius) + (body.semimajorAxis / 50);
+      const distance = (mercury.semimajorAxis / 50) + ((body.semimajorAxis - mercury.semimajorAxis) / 50);
       const x = Math.cos(angle) * distance;
       const z = Math.sin(angle) * distance;
       
