@@ -1,11 +1,17 @@
 import { Canvas } from "@react-three/fiber";
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import Controls from "./controls/CameraControls";
 import SolarSystem from "./SolarSystem";
 import { useScene } from "./context/SceneContext";
+import { Planet } from "../types";
 
-const Scene = ({data}) => {
-    const farPoint = useMemo(() => data?.allPlanets.at(data?.allPlanets ?? 0).semimajorAxis ?? 0, [data]);
+interface SceneProps {
+    data?: {
+        allPlanets: Planet[];
+    }
+}
+const Scene: FC<SceneProps> = ({data}) => {
+    const farPoint = useMemo(() => data?.allPlanets[0]?.semimajorAxis ?? 0, [data]);
     const x = useScene();
     console.log('hallo!', x);
     return(

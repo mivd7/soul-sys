@@ -1,16 +1,17 @@
-import { extend } from '@react-three/fiber'
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+import React, { useRef, useEffect } from 'react';
+import { extend } from '@react-three/fiber';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import scienceGothic from '../assets/Science Gothic_Regular.json';
-import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
+import type { TextProps } from '../types';
 
 extend({ TextGeometry });
 
-const Text = ({ text = 'Planet', position = [0, 0, 0], size = 80 }) => {
+const Text: React.FC<TextProps> = ({ text = 'Planet', position = [0, 0, 0], size = 80 }) => {
     const font = new FontLoader().parse(scienceGothic);
-    const textRef = useRef();
-    const boxRef = useRef();
+    const textRef = useRef<THREE.Mesh>(null);
+    const boxRef = useRef<THREE.Mesh>(null);
     
     useEffect(() => {
         if (textRef.current) {
