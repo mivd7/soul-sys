@@ -29,7 +29,7 @@ const Sphere: React.FC<SphereProps> = ({ position, textureUrl, body, scale, geom
       }}
       position={position}>
       <sphereGeometry attach="geometry" args={geometry}/>
-      <meshStandardMaterial attach="material" map={texture} />
+      <meshStandardMaterial attach="material" map={texture} transparent={false} />
     </mesh>
   )
 }

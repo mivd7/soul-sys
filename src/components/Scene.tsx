@@ -4,18 +4,17 @@ import Controls from "./controls/CameraControls";
 import SolarSystem from "./SolarSystem";
 import { useScene } from "./context/SceneContext";
 import { Planet } from "../types";
-
 interface SceneProps {
     data?: {
         allPlanets: Planet[];
     }
 }
 const Scene: FC<SceneProps> = ({data}) => {
-    const farPoint = useMemo(() => data?.allPlanets[0]?.semimajorAxis ?? 0, [data]);
+    const farPoint = useMemo(() => data?.allPlanets.at(data.allPlanets.length - 1)?.semimajorAxis ?? 0, [data]);
     const x = useScene();
     console.log('hallo!', x);
     return(
-        <Canvas camera={{ position: [0, 0, 5000], fov: 75, near: 1, far: farPoint }}>
+        <Canvas camera={{ position: [0, 149598023, 5000], fov: 75, near: 1, far: farPoint }}>
             <Controls />
             <directionalLight intensity={1} />
             <ambientLight intensity={0.6} />

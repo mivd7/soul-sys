@@ -19,7 +19,7 @@ function Controls() {
     <FlyControls 
       ref={ref} 
       args={[camera, domElement]} 
-      movementSpeed={500000} 
+      movementSpeed={100000} 
       domElement={domElement}
       rollSpeed={Math.PI / 12}
       autoForward={false}

@@ -51,7 +51,7 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
           textureUrl={`assets/textures/2k_${body.englishName.toLowerCase()}.jpg`}
           position={[x, 0, z]} 
           scale={[1, 1, 1]}
-          geometry={[body.equaRadius, 50, 50]}
+          geometry={[body.equaRadius, 500, 500]}
           body={body} />
       </Suspense>
     )})}
