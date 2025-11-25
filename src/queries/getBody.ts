@@ -7,9 +7,8 @@ export const GET_BODY = gql`
         englishName
         axialTilt
         semimajorAxis
-        meanRadius
-        polarRadius
         equaRadius
+        
     }
   }
 `;

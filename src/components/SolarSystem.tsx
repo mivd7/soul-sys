@@ -29,6 +29,7 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
   })
 
   const sun = useMemo(() => sunData?.body, [sunData])
+  console.log('sun', sun);
   scene.background = texture;
 
   return (

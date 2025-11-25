@@ -12,7 +12,7 @@ interface SceneProps {
 const Scene: FC<SceneProps> = ({data}) => {
     const farPoint = useMemo(() => data?.allPlanets.at(data.allPlanets.length - 1)?.semimajorAxis ?? 0, [data]);
     const x = useScene();
-    console.log('hallo!', x);
+    console.log('useScene result', x);
     return(
         <Canvas camera={{ position: [0, 0, 149598023], fov: 75, near: 1, far: farPoint }}>
             <Controls />
