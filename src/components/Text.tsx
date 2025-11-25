@@ -6,14 +6,14 @@ const Text: React.FC<TextProps> = ({ text = 'Planet', position = [0, 0, 0], size
     return (
         <group position={[position[0], position[1] + size * 2, position[2]]}>
             {/* Background box */}
-            <mesh position={[0, 0, -10]}>
+            {/* <mesh position={[0, 0, -10]}>
                 <boxGeometry args={[text.length * size * 0.6, size * 1.2, 5]} />
                 <meshBasicMaterial 
                     color="#000000" 
                     transparent 
                     opacity={0.7} 
                 />
-            </mesh>
+            </mesh> */}
             
             {/* Text using Drei */}
             <DreiText

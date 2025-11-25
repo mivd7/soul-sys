@@ -31,11 +31,10 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
 
   scene.background = texture;
   const mercury = data[0];
-  console.log('mercury', mercury);
 
   return (
     <group ref={group}>
-    {data.length > 0 && sun && data.map((body, i) => {
+    {data.length > 0 && data.map((body, i) => {
       const angle = (i * Math.PI * 2) / data.length; // Distribute planets in a circle
       const distance = (mercury.semimajorAxis / 50) + ((body.semimajorAxis - mercury.semimajorAxis) / 50);
       const x = Math.cos(angle) * distance;
@@ -68,7 +67,8 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
           position={[0,0,0]} 
           scale={[.5, .5, .5]}
           geometry={[sun.equaRadius, 50, 50]}
-          body={sun} />
+          body={sun} 
+        />
       </Suspense>
     }
   </group>

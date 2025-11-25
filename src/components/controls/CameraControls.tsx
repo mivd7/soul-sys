@@ -23,7 +23,7 @@ function Controls() {
       domElement={domElement}
       rollSpeed={Math.PI / 12}
       autoForward={false}
-      dragToLook={true} 
+      dragToLook
     />
   )
 }
