@@ -21,7 +21,7 @@ export interface SphereProps {
   textureUrl: string;
   body: Planet;
   scale: [number, number, number];
-  geometry: [number, number, number];
+  geometry: [number, number | undefined, number | undefined];
 }
 
 export interface TextProps {

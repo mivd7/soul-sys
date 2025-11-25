@@ -14,7 +14,7 @@ const Scene: FC<SceneProps> = ({data}) => {
     const x = useScene();
     console.log('hallo!', x);
     return(
-        <Canvas camera={{ position: [0, 149598023, 5000], fov: 75, near: 1, far: farPoint }}>
+        <Canvas camera={{ position: [0, 0, 149598023], fov: 75, near: 1, far: farPoint }}>
             <Controls />
             <directionalLight intensity={1} />
             <ambientLight intensity={0.6} />

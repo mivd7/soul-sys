@@ -8,6 +8,16 @@ import { useQuery } from "@apollo/client/react";
 import { SolarSystemProps } from "../types";
 import { CelestialBody } from "../types/body";
 
+const loader = new CubeTextureLoader();
+const texture = loader.load([
+    "assets/backgrounds/front.jpeg",
+    "assets/backgrounds/back.jpeg",
+    "assets/backgrounds/top.jpeg",
+    "assets/backgrounds/bottom.jpeg",
+    "assets/backgrounds/left.jpeg",
+    "assets/backgrounds/right.jpeg",
+  ]);
+
 const SolarSystem: FC<SolarSystemProps> = ({data}) => {
   const { scene } = useThree();
   let group = useRef<Group<Object3DEventMap>>(null);
@@ -19,24 +29,14 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
   })
 
   const sun = useMemo(() => sunData?.body, [sunData])
-  const loader = new CubeTextureLoader();
-  const texture = loader.load([
-    "assets/backgrounds/front.jpeg",
-    "assets/backgrounds/back.jpeg",
-    "assets/backgrounds/top.jpeg",
-    "assets/backgrounds/bottom.jpeg",
-    "assets/backgrounds/left.jpeg",
-    "assets/backgrounds/right.jpeg",
-  ]);
-
   scene.background = texture;
-  const mercury = data[0];
 
   return (
     <group ref={group}>
     {data.length > 0 && data.map((body, i) => {
       const angle = (i * Math.PI * 2) / data.length; // Distribute planets in a circle
-      const distance = (mercury.semimajorAxis / 50) + ((body.semimajorAxis - mercury.semimajorAxis) / 50);
+      //(mercury.semimajorAxis / 50) + ((body.semimajorAxis - mercury.semimajorAxis) / 50);
+      const distance = body.semimajorAxis;
       const x = Math.cos(angle) * distance;
       const z = Math.sin(angle) * distance;
       
@@ -44,14 +44,14 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
       <Suspense key={body.id} fallback="loading">
         <Text 
           text={body.englishName} 
-          position={[x, -150, z]} 
+          position={[x, 0, z]} 
           size={body.equaRadius * 0.5} 
         />
         <Sphere 
           textureUrl={`assets/textures/2k_${body.englishName.toLowerCase()}.jpg`}
           position={[x, 0, z]} 
           scale={[1, 1, 1]}
-          geometry={[body.equaRadius, 500, 500]}
+          geometry={[body.equaRadius, undefined, undefined]}
           body={body} />
       </Suspense>
     )})}
@@ -65,8 +65,8 @@ const SolarSystem: FC<SolarSystemProps> = ({data}) => {
         <Sphere 
           textureUrl={`assets/textures/2k_${sun.englishName.toLowerCase()}.jpg`}
           position={[0,0,0]} 
-          scale={[.5, .5, .5]}
-          geometry={[sun.equaRadius, 50, 50]}
+          scale={[1,1,1]}
+          geometry={[sun.equaRadius, undefined, undefined]}
           body={sun} 
         />
       </Suspense>
