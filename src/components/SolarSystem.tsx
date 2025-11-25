@@ -1,16 +1,17 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { FC, Suspense, useMemo, useRef } from "react";
 import { useThree } from "@react-three/fiber";
-import { CubeTextureLoader } from "three";
+import { CubeTextureLoader, Group, Object3DEventMap } from "three";
 import Sphere from "./Sphere";
 import Text from "./Text";
-import Axios from "axios";
 import { GET_BODY } from "../queries/getBody";
 import { useQuery } from "@apollo/client/react";
+import { SolarSystemProps } from "../types";
+import { CelestialBody } from "../types/body";
 
-const SolarSystem = ({data}) => {
+const SolarSystem: FC<SolarSystemProps> = ({data}) => {
   const { scene } = useThree();
-  let group = useRef();
-  const { data: sunData } = useQuery(GET_BODY, {
+  let group = useRef<Group<Object3DEventMap>>(null);
+  const { data: sunData } = useQuery<{body: CelestialBody}>(GET_BODY, {
     variables: {
       id: 'soleil'
     },
@@ -28,8 +29,6 @@ const SolarSystem = ({data}) => {
     "assets/backgrounds/right.jpeg",
   ]);
 
-  texture.height = '100vh';
-  texture.width = '100vw';
   scene.background = texture;
   const mercury = data[0];
   console.log('mercury', mercury);
@@ -69,8 +68,7 @@ const SolarSystem = ({data}) => {
           position={[0,0,0]} 
           scale={[.5, .5, .5]}
           geometry={[sun.equaRadius, 50, 50]}
-          body={sun} 
-          isCenter={true}/>
+          body={sun} />
       </Suspense>
     }
   </group>

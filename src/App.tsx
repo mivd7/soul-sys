@@ -7,7 +7,7 @@ import Scene from './components/Scene';
 import type { ApiResponse } from './types';
 
 function App(): JSX.Element {
-  const { loading, error, data } = useQuery<ApiResponse>(GET_PLANETS);
+  const { error, data } = useQuery<ApiResponse>(GET_PLANETS);
 
   return (
     <Suspense fallback={<p style={{fontSize: 24, color: 'white'}}>Something went wrong. {error && `${error.name} : ${error.message}`}</p>}>

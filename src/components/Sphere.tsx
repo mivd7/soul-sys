@@ -11,7 +11,6 @@ const Sphere: React.FC<SphereProps> = ({ position, textureUrl, body, scale, geom
     if (mesh.current) {
       const axis = new THREE.Vector3(0, 0, 0);
       mesh.current.rotateOnAxis(axis, body.axialTilt);
-      // mesh.current.color = '#000000'; // This property doesn't exist on Mesh
     }
   }, [mesh, body.axialTilt]);
   
@@ -25,7 +24,7 @@ const Sphere: React.FC<SphereProps> = ({ position, textureUrl, body, scale, geom
     <mesh
       ref={mesh}
       scale={scale}
-      onClick={(event) => {
+      onClick={() => {
         console.log(body);
       }}
       position={position}>

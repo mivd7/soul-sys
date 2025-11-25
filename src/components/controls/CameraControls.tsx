@@ -1,23 +1,22 @@
-import React, { useRef } from "react";
-import { extend, useThree, useFrame } from "@react-three/fiber";
-import { FlyControls } from 'three/examples/jsm/controls/FlyControls.js';
+import { useRef } from "react";
+import { useThree, useFrame } from "@react-three/fiber";
+import { FlyControls } from "@react-three/drei";
 
-extend({ FlyControls });
 function Controls() {
   const {
     camera,
     gl: { domElement  },
   } = useThree();  
-  const ref = useRef()
+  const ref = useRef<any>(null)
   
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (ref.current) {
       ref.current.update(delta)
     }
   })
   
   return (
-    <flyControls 
+    <FlyControls 
       ref={ref} 
       args={[camera, domElement]} 
       movementSpeed={500000} 
