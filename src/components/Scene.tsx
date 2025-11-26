@@ -4,6 +4,7 @@ import Controls from "./controls/CameraControls";
 import SolarSystem from "./SolarSystem";
 import { useScene } from "./context/SceneContext";
 import { Planet } from "../types";
+
 interface SceneProps {
     data?: {
         allPlanets: Planet[];
@@ -14,7 +15,7 @@ const Scene: FC<SceneProps> = ({data}) => {
     const x = useScene();
     console.log('useScene result', x);
     return(
-        <Canvas camera={{ position: [0, 0, 149598023], fov: 75, near: 1, far: farPoint }}>
+        <Canvas style={{height: '100vh'}} camera={{ position: [0, 0, 149598023], fov: 75, near: 1, far: farPoint }}>
             <Controls />
             <directionalLight intensity={1} />
             <ambientLight intensity={0.6} />
