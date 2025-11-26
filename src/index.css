@@ -1,3 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&display=swap');
 @import "tailwindcss";
-@import "tailwindcss/preflight";
+
+@theme {
+  --color-lcars-orange: #FF9900;
+  --color-lcars-gold: #FFCC00;
+  --color-lcars-blue: #9999FF;
+  --color-lcars-purple: #CC99CC;
+  --color-lcars-coral: #FF9999;
+  --color-lcars-tan: #FFCC99;
+  --color-lcars-background: rgba(0, 0, 0, 0.85);
+  
+  --font-family-lcars: Antonio, system-ui, sans-serif;
+  
+  --radius-lcars: 24px;
+}
