@@ -29,5 +29,6 @@
     "types": ["three"]
   },
   "include": ["src"],
+  "exclude": ["./src/constants.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

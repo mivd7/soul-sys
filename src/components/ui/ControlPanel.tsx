@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useSceneContext } from "../context/SceneContext";
 
 const ControlPanel: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
-
+  const { planets } = useSceneContext();
   return (
     <>
       {/* Toggle Button */}
@@ -17,12 +18,12 @@ const ControlPanel: React.FC = () => {
 
       {/* Main Panel */}
       {isOpen && (
-        <div className="fixed top-0 left-0 w-96 h-screen z-40 flex flex-col">
+        <div className="fixed top-0 left-0 w-1/3 h-screen z-40 flex flex-col">
           {/* Header Bar */}
           <div className="flex items-stretch h-24">
             {/* Corner piece */}
             <div className="w-32 bg-lcars-purple rounded-br-[48px]" />
-            
+
             {/* Top bar with title */}
             <div className="flex-1 flex items-center justify-between bg-lcars-orange px-6">
               <span className="text-black font-lcars font-bold text-3xl tracking-wider">
@@ -42,19 +43,29 @@ const ControlPanel: React.FC = () => {
             {/* Left sidebar with colored strips */}
             <div className="w-32 flex flex-col gap-2 p-2">
               <div className="h-16 bg-lcars-blue rounded-lcars flex items-center justify-center">
-                <span className="font-lcars text-black font-bold text-sm">02-654598</span>
+                <span className="font-lcars text-black font-bold text-sm">
+                  02-654598
+                </span>
               </div>
               <div className="h-20 bg-lcars-coral rounded-lcars flex items-center justify-center">
-                <span className="font-lcars text-black font-bold text-sm">03-975683</span>
+                <span className="font-lcars text-black font-bold text-sm">
+                  03-975683
+                </span>
               </div>
               <div className="h-16 bg-lcars-tan rounded-lcars flex items-center justify-center">
-                <span className="font-lcars text-black font-bold text-sm">04-765486</span>
+                <span className="font-lcars text-black font-bold text-sm">
+                  04-765486
+                </span>
               </div>
               <div className="h-20 bg-lcars-gold rounded-lcars flex items-center justify-center">
-                <span className="font-lcars text-black font-bold text-sm">05-224953</span>
+                <span className="font-lcars text-black font-bold text-sm">
+                  05-224953
+                </span>
               </div>
               <div className="flex-1 bg-lcars-orange rounded-lcars flex items-center justify-center">
-                <span className="font-lcars text-black font-bold text-sm">06-578565</span>
+                <span className="font-lcars text-black font-bold text-sm">
+                  06-578565
+                </span>
               </div>
             </div>
 
@@ -64,9 +75,15 @@ const ControlPanel: React.FC = () => {
                 {/* Tech readout header */}
                 <div className="flex items-center gap-4 mb-6">
                   <div className="flex gap-1">
-                    <span className="text-lcars-orange font-lcars text-lg font-bold">●</span>
-                    <span className="text-lcars-gold font-lcars text-lg font-bold">●</span>
-                    <span className="text-lcars-blue font-lcars text-lg font-bold">●</span>
+                    <span className="text-lcars-orange font-lcars text-lg font-bold">
+                      ●
+                    </span>
+                    <span className="text-lcars-gold font-lcars text-lg font-bold">
+                      ●
+                    </span>
+                    <span className="text-lcars-blue font-lcars text-lg font-bold">
+                      ●
+                    </span>
                   </div>
                   <span className="text-lcars-orange font-lcars text-sm tracking-wider">
                     SYSTEM READY
@@ -76,6 +93,13 @@ const ControlPanel: React.FC = () => {
                 {/* Content will go here */}
                 <div className="flex-1 text-lcars-blue font-lcars">
                   {/* Placeholder for planet list or details */}
+                  {planets && (
+                    <ul>
+                      {planets.map((planet) => (
+                        <li key={planet.id}>{planet.englishName}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
 
                 {/* Bottom tech display */}

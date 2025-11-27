@@ -1,11 +1,17 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useQuery } from "@apollo/client/react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { GET_PLANETS } from "../../queries/getPlanets";
+import { ApiResponse, Planet } from "../../types";
+import { CelestialBody } from "../../types/body";
+import { GET_BODY } from "../../queries/getBody";
 
 // Define the shape of your context state
 interface SceneState {
+  planets: CelestialBody[];
   selectedPlanet: string | null;
   cameraPosition: [number, number, number];
-  isLoading: boolean;
-  viewMode: 'orbit' | 'explore' | 'overview';
+  sceneLoading: boolean;
+  viewMode: "orbit" | "explore" | "overview";
 }
 
 // Define the context type including state and actions
@@ -13,14 +19,17 @@ interface SceneContextType {
   // State
   selectedPlanet: string | null;
   cameraPosition: [number, number, number];
-  isLoading: boolean;
-  viewMode: 'orbit' | 'explore' | 'overview';
-  
+  dataLoading: boolean;
+  sceneLoading: boolean;
+  viewMode: "orbit" | "explore" | "overview";
+  planets?: Planet[];
+  sun?: CelestialBody;
+
   // Actions
   setSelectedPlanet: (planet: string | null) => void;
   setCameraPosition: (position: [number, number, number]) => void;
-  setIsLoading: (loading: boolean) => void;
-  setViewMode: (mode: 'orbit' | 'explore' | 'overview') => void;
+  setSceneLoading: (loading: boolean) => void;
+  setViewMode: (mode: "orbit" | "explore" | "overview") => void;
   resetScene: () => void;
 }
 
@@ -29,10 +38,11 @@ const SceneContext = createContext<SceneContextType | undefined>(undefined);
 
 // Default state
 const defaultState: SceneState = {
+  planets: [],
   selectedPlanet: null,
   cameraPosition: [0, 0, 5000],
-  isLoading: false,
-  viewMode: 'overview'
+  sceneLoading: false,
+  viewMode: "overview",
 };
 
 // Provider component props
@@ -42,16 +52,43 @@ interface SceneProviderProps {
 
 // Provider component
 export const SceneProvider: React.FC<SceneProviderProps> = ({ children }) => {
-  const [selectedPlanet, setSelectedPlanet] = useState<string | null>(defaultState.selectedPlanet);
-  const [cameraPosition, setCameraPosition] = useState<[number, number, number]>(defaultState.cameraPosition);
-  const [isLoading, setIsLoading] = useState<boolean>(defaultState.isLoading);
-  const [viewMode, setViewMode] = useState<'orbit' | 'explore' | 'overview'>(defaultState.viewMode);
+  const [selectedPlanet, setSelectedPlanet] = useState<string | null>(
+    defaultState.selectedPlanet
+  );
+  const [cameraPosition, setCameraPosition] = useState<
+    [number, number, number]
+  >(defaultState.cameraPosition);
+  const [sceneLoading, setSceneLoading] = useState<boolean>(
+    defaultState.sceneLoading
+  );
+  const [viewMode, setViewMode] = useState<"orbit" | "explore" | "overview">(
+    defaultState.viewMode
+  );
 
+  const {
+    error,
+    loading: dataLoading,
+    data: planetData,
+  } = useQuery<ApiResponse>(GET_PLANETS);
+  `  console.log('data', data.)`;
+  if (error) {
+    console.error(error);
+    throw new Error("error fetching planets");
+  }
+
+  const { data: sunData } = useQuery<{ body: CelestialBody }>(GET_BODY, {
+    variables: {
+      id: "soleil",
+    },
+    pollInterval: 0,
+  });
+
+  const sun = sunData?.body;
   // Reset function to return to default state
   const resetScene = () => {
     setSelectedPlanet(defaultState.selectedPlanet);
     setCameraPosition(defaultState.cameraPosition);
-    setIsLoading(defaultState.isLoading);
+    setSceneLoading(defaultState.sceneLoading);
     setViewMode(defaultState.viewMode);
   };
 
@@ -59,15 +96,17 @@ export const SceneProvider: React.FC<SceneProviderProps> = ({ children }) => {
     // State
     selectedPlanet,
     cameraPosition,
-    isLoading,
+    sceneLoading,
+    dataLoading,
     viewMode,
-    
+    planets: planetData?.allPlanets,
+    sun,
     // Actions
     setSelectedPlanet,
     setCameraPosition,
-    setIsLoading,
+    setSceneLoading,
     setViewMode,
-    resetScene
+    resetScene,
   };
 
   return (
@@ -78,13 +117,13 @@ export const SceneProvider: React.FC<SceneProviderProps> = ({ children }) => {
 };
 
 // Custom hook to use the context
-export const useScene = (): SceneContextType => {
+export const useSceneContext = (): SceneContextType => {
   const context = useContext(SceneContext);
-  
+
   if (context === undefined) {
-    throw new Error('useScene must be used within a SceneProvider');
+    throw new Error("useScene must be used within a SceneProvider");
   }
-  
+
   return context;
 };
 

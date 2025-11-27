@@ -1,20 +1,26 @@
-import { Suspense } from 'react';
-import { useQuery } from '@apollo/client/react';
-import { GET_PLANETS } from './queries/getPlanets';
-import { SceneProvider } from './components/context/SceneContext';
-import Scene from './components/Scene';
-import ControlPanel from './components/ui/ControlPanel';
-import type { ApiResponse } from './types';
+import { Suspense } from "react";
+import { useQuery } from "@apollo/client/react";
+import { GET_PLANETS } from "./queries/getPlanets";
+import { SceneProvider } from "./components/context/SceneContext";
+import Scene from "./components/Scene";
+import ControlPanel from "./components/ui/ControlPanel";
+import type { ApiResponse } from "./types";
 
 function App(): JSX.Element {
   const { error, data } = useQuery<ApiResponse>(GET_PLANETS);
 
   return (
-    <Suspense fallback={<p style={{fontSize: 24, color: 'white'}}>Launching...   {error && `${error.name} : ${error.message}`}</p>}>
+    <Suspense
+      fallback={
+        <p style={{ fontSize: 24, color: "white" }}>
+          Launching... {error && `${error.name} : ${error.message}`}
+        </p>
+      }
+    >
       <SceneProvider>
         <ControlPanel />
-        {data && <Scene data={data}/>}
-      </SceneProvider>  
+        {data && <Scene data={data} />}
+      </SceneProvider>
     </Suspense>
   );
 }
