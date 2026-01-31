@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 .env
+/.vite
+.vite
 
 # testing
 /coverage
